@@ -60,7 +60,7 @@ class CacheHelper {
     } else if (value is bool) {
       return await sharedPreferences.setBool(key, value);
     } else {
-      return await sharedPreferences.getInt(key);
+      return await sharedPreferences.setInt(key,value);
     }
   }
 
