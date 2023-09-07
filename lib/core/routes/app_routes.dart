@@ -31,7 +31,7 @@ class AppRoutes {
       case Routes.intitlRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case Routes.chngeLang:
-        return MaterialPageRoute(builder: (_) => const ChangeLangScreen());
+        return MaterialPageRoute(builder: (_) => const LoginScreen ());
       case Routes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.sendCode:

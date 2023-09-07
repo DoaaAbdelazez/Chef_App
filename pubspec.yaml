@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  dartz: ^0.10.1
   dio: ^5.3.2
   flutter:
     sdk: flutter
@@ -36,6 +37,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_screenutil: ^5.9.0
+  flutter_spinkit: ^5.2.0
+  fluttertoast: ^8.2.2
   get_it: ^7.6.0
   google_fonts: ^5.1.0
   shared_preferences: ^2.2.0

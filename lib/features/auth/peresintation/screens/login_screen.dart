@@ -1,10 +1,149 @@
+import 'package:chef_app/core/locale/app_locale.dart';
+import 'package:chef_app/core/utils/app_assets.dart';
+import 'package:chef_app/core/utils/app_colors.dart';
+import 'package:chef_app/core/utils/app_strings.dart';
+import 'package:chef_app/core/utils/commons.dart';
+import 'package:chef_app/core/widgets/custom_button.dart';
+import 'package:chef_app/core/widgets/custom_image.dart';
+import 'package:chef_app/core/widgets/custom_loading_indicator.dart';
+import 'package:chef_app/core/widgets/custom_text_form_field.dart';
+import 'package:chef_app/features/auth/peresintation/cubits/cubit/login_cubit.dart';
+import 'package:chef_app/features/auth/peresintation/cubits/cubit/login_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: BlocConsumer<LoginCubit, LoginState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return Column(
+                children: [
+                  //image & Welcome back
+                  Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      const CustomImage(
+                        imgPath: AppAssets.backgroundTwo,
+                        w: double.infinity,
+                      ),
+                      Center(
+                        child: Text(
+                          AppStrings.welcomeBack.tr(context),
+                          style: Theme.of(context).textTheme.displayLarge,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: 100.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: BlocConsumer<LoginCubit, LoginState>(
+                      listener: (context, state) {
+                        if (state is LoginSucessState) {
+                          showToast(
+                              message: AppStrings.loginSucessfully.tr(context),
+                              state: ToastStates.sucess);
+                        }
+                        if (state is LoginErrorState) {
+                          showToast(
+                              message: state.message,
+                              state: ToastStates.error);
+                        }
+                      },
+                      builder: (context, state) {
+                        return Form(
+                          key: BlocProvider.of<LoginCubit>(context).loginKey,
+                          child: Column(
+                            children: [
+                              //! email
+                              CustomTextFormField(
+                                controller: BlocProvider.of<LoginCubit>(context)
+                                    .emailController,
+                                hint: AppStrings.email.tr(context),
+                                validate: (data) {
+                                  if (data!.isEmpty ||
+                                      !data.contains('@gmail.com')) {
+                                    return AppStrings.pleaseEnterValidEmail
+                                        .tr(context);
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 32.h,
+                              ),
+                              //!password
+                              CustomTextFormField(
+                                controller: BlocProvider.of<LoginCubit>(context)
+                                    .passwordController,
+                                hint: AppStrings.password.tr(context),
+                                ispassword: BlocProvider.of<LoginCubit>(context)
+                                    .isLoginPasswordShowing,
+                                icon: BlocProvider.of<LoginCubit>(context)
+                                    .suffixIcon,
+                                suffixIconOnPressed: () {
+                                  BlocProvider.of<LoginCubit>(context)
+                                    ..changeLoginPasswordSuffixIcon();
+                                },
+                                validate: (data) {
+                                  if (data!.length < 6 || data.isEmpty) {
+                                    return AppStrings.pleaseEnterValidPassword
+                                        .tr(context);
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 24.h,
+                              ),
+                              //!forget password
+                              Row(
+                                children: [
+                                  Text(AppStrings.forgetPassword.tr(context)),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 64.h,
+                              ),
+
+                              state is LoginLoadingState
+                                  ? const CustomLoadinIndicator()
+                                  : CustomButton(
+                                      onPressed: () {
+                                        if (BlocProvider.of<LoginCubit>(context)
+                                            .loginKey
+                                            .currentState!
+                                            .validate()) {
+                                          BlocProvider.of<LoginCubit>(context)
+                                              .login();
+                                        }
+                                      },
+                                      text: AppStrings.signIn.tr(context),
+                                    ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
