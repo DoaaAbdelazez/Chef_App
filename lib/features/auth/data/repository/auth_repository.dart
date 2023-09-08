@@ -29,6 +29,8 @@ ApiKeys.email:email,
     return  Right(response[ApiKeys.message]);
     } on ServerException catch (error) {
     return Left(error.errorModel.errorMessage);
+    }catch(e){
+      return Left(e.toString());
     }
   }
 }

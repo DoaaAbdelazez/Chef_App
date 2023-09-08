@@ -28,8 +28,7 @@ class SendCodeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
-          listener: (context, state) {
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             return Form(
               key: BlocProvider.of<ForgetPasswordCubit>(context).sendCodeKey,
@@ -66,19 +65,19 @@ class SendCodeScreen extends StatelessWidget {
                   ),
                   //button
                   state is SendCodeLoading
-                                  ? const CustomLoadinIndicator()
-                                  : CustomButton(
-                    onPressed: () {
-                      if (BlocProvider.of<ForgetPasswordCubit>(context)
-                          .sendCodeKey
-                          .currentState!
-                          .validate()) {
-                        BlocProvider.of<ForgetPasswordCubit>(context)
-                            .sendCodeKey;
-                      }
-                    },
-                    text: AppStrings.sendResetLink.tr(context),
-                  ),
+                      ? const CustomLoadinIndicator()
+                      : CustomButton(
+                          onPressed: () {
+                            if (BlocProvider.of<ForgetPasswordCubit>(context)
+                                .sendCodeKey
+                                .currentState!
+                                .validate()) {
+                              BlocProvider.of<ForgetPasswordCubit>(context)
+                                  .sendCode();
+                            }
+                          },
+                          text: AppStrings.sendResetLink.tr(context),
+                        ),
                 ],
               ),
             );
