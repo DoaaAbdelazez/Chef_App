@@ -3,7 +3,7 @@ import 'package:chef_app/core/database/api/api_consumer.dart';
 import 'package:chef_app/core/database/api/dio_consumer.dart';
 import 'package:chef_app/core/database/cache/cache_helper.dart';
 import 'package:chef_app/features/auth/data/repository/auth_repository.dart';
-import 'package:chef_app/features/auth/peresintation/cubits/cubit/login_cubit.dart';
+import 'package:chef_app/features/auth/peresintation/cubits/login_cubit/login_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 

@@ -1,4 +1,5 @@
 import 'package:chef_app/core/locale/app_locale.dart';
+import 'package:chef_app/core/routes/app_routes.dart';
 import 'package:chef_app/core/utils/app_assets.dart';
 import 'package:chef_app/core/utils/app_colors.dart';
 import 'package:chef_app/core/utils/app_strings.dart';
@@ -7,8 +8,8 @@ import 'package:chef_app/core/widgets/custom_button.dart';
 import 'package:chef_app/core/widgets/custom_image.dart';
 import 'package:chef_app/core/widgets/custom_loading_indicator.dart';
 import 'package:chef_app/core/widgets/custom_text_form_field.dart';
-import 'package:chef_app/features/auth/peresintation/cubits/cubit/login_cubit.dart';
-import 'package:chef_app/features/auth/peresintation/cubits/cubit/login_state.dart';
+import 'package:chef_app/features/auth/peresintation/cubits/login_cubit/login_cubit.dart';
+import 'package:chef_app/features/auth/peresintation/cubits/login_cubit/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,11 +56,11 @@ class LoginScreen extends StatelessWidget {
                           showToast(
                               message: AppStrings.loginSucessfully.tr(context),
                               state: ToastStates.sucess);
+                          navigate(context: context, route: Routes.profileHome);
                         }
                         if (state is LoginErrorState) {
                           showToast(
-                              message: state.message,
-                              state: ToastStates.error);
+                              message: state.message, state: ToastStates.error);
                         }
                       },
                       builder: (context, state) {
@@ -111,7 +112,15 @@ class LoginScreen extends StatelessWidget {
                               //!forget password
                               Row(
                                 children: [
-                                  Text(AppStrings.forgetPassword.tr(context)),
+                                  TextButton(
+                                    onPressed: () {
+                                      navigate(
+                                          context: context,
+                                          route: Routes.sendCode);
+                                    },
+                                    child: Text(
+                                        AppStrings.forgetPassword.tr(context)),
+                                  ),
                                 ],
                               ),
                               SizedBox(

@@ -11,6 +11,7 @@ class DioConsumer extends ApiConsumer {
 
   DioConsumer(this.dio) {
     dio.options.baseUrl = EndPoint.baseUrl;
+    dio.options.contentType = Headers.jsonContentType;
     dio.interceptors.add(ApiInterceptors());
     dio.interceptors.add(LogInterceptor(
       request: true,
